@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>test</title>
+</head>
+<body>
+  <input placeholder="ping something" /><button>ping!</button>
+  <pre></pre>
+  <script src="//localhost:3001/socket.io/socket.io.js"></script>
+  <script>
+    (function () {
+      var socket = io.connect("//localhost:3001/"),
+          pre = document.querySelectorAll("pre")[0],
+          input = document.querySelectorAll("input")[0],
+          button = document.querySelectorAll("button")[0];
+
+      button.addEventListener("click", function () {
+          socket.emit('ping', input.value);
+      });
+
+      socket.on("pong", function (data) {
+          pre.innerHTML += data;
+      });
+    })();
+  </script>
+</body>
+</html>
